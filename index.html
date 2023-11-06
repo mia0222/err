@@ -21,17 +21,25 @@
             errorInfo.textContent = "エラー情報: " + error.message;
         }
 
-        if ("geolocation" in navigator) {
-            const options = {
-                enableHighAccuracy: true,
-                timeout: 5000,
-                maximumAge: 0
-            };
+        function updatePosition() {
+            if ("geolocation" in navigator) {
+                const options = {
+                    enableHighAccuracy: true,
+                    timeout: 5000,
+                    maximumAge: 0
+                };
 
-            navigator.geolocation.watchPosition(showPositionInfo, showErrorInfo, options);
-        } else {
-            alert("このブラウザは位置情報をサポートしていません。");
+                navigator.geolocation.getCurrentPosition(showPositionInfo, showErrorInfo, options);
+            } else {
+                alert("このブラウザは位置情報をサポートしていません。");
+            }
         }
+
+        // 初回実行
+        updatePosition();
+
+        // 5秒ごとに位置情報を更新
+        setInterval(updatePosition, 5000);
     </script>
 </body>
 </html>
