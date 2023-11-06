@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>GPSデバッグ</title>
+</head>
+<body>
+    <div id="debugOutput">
+        <p id="positionInfo">位置情報: </p>
+        <p id="errorInfo">エラー情報: </p>
+    </div>
+
+    <script>
+        function showPositionInfo(position) {
+            const positionInfo = document.getElementById("positionInfo");
+            positionInfo.textContent = "位置情報: Latitude - " + position.coords.latitude + ", Longitude - " + position.coords.longitude + ", Accuracy - " + position.coords.accuracy + " meters";
+        }
+
+        function showErrorInfo(error) {
+            const errorInfo = document.getElementById("errorInfo");
+            errorInfo.textContent = "エラー情報: " + error.message;
+        }
+
+        if ("geolocation" in navigator) {
+            const options = {
+                enableHighAccuracy: true,
+                timeout: 5000,
+                maximumAge: 0
+            };
+
+            navigator.geolocation.watchPosition(showPositionInfo, showErrorInfo, options);
+        } else {
+            alert("このブラウザは位置情報をサポートしていません。");
+        }
+    </script>
+</body>
+</html>
